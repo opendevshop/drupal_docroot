@@ -1,55 +1,44 @@
 <?php
+// $Id: example.sites.php,v 1.3 2010/04/15 12:01:28 dries Exp $
 
 /**
  * @file
- * Configuration file for multi-site support and directory aliasing feature.
+ * Configuration file for Drupal's multi-site directory aliasing feature.
  *
- * This file is required for multi-site support and also allows you to define a
- * set of aliases that map hostnames, ports, and pathnames to configuration
- * directories in the sites directory. These aliases are loaded prior to
+ * Drupal searches for an appropriate configuration directory based on the
+ * website's hostname and pathname. A detailed description of the rules for
+ * discovering the configuration directory can be found in the comment
+ * documentation in 'sites/default/default.settings.php'.
+ *
+ * This file allows you to define a set of aliases that map hostnames and
+ * pathnames to configuration directories. These aliases are loaded prior to
  * scanning for directories, and they are exempt from the normal discovery
- * rules. See default.settings.php to view how Drupal discovers the
- * configuration directory when no alias is found.
+ * rules. The aliases are defined in an associative array named $sites, which
+ * should look similar to the following:
  *
- * Aliases are useful on development servers, where the domain name may not be
- * the same as the domain of the live server. Since Drupal stores file paths in
- * the database (files, system table, etc.) this will ensure the paths are
- * correct when the site is deployed to a live server.
- *
- * To activate this feature, copy and rename it such that its path plus
- * filename is 'sites/sites.php'.
- *
- * Aliases are defined in an associative array named $sites. The array is
- * written in the format: '<port>.<domain>.<path>' => 'directory'. As an
- * example, to map https://www.drupal.org:8080/mysite/test to the configuration
- * directory sites/example.com, the array should be defined as:
- * @code
  * $sites = array(
- *   '8080.www.drupal.org.mysite.test' => 'example.com',
+ *   'devexample.com' => 'example.com',
+ *   'localhost.example' => 'example.com',
  * );
- * @endcode
- * The URL, https://www.drupal.org:8080/mysite/test/, could be a symbolic link
- * or an Apache Alias directive that points to the Drupal root containing
- * index.php. An alias could also be created for a subdomain. See the
- * @link https://www.drupal.org/documentation/install online Drupal installation guide @endlink
- * for more information on setting up domains, subdomains, and subdirectories.
  *
- * The following examples look for a site configuration in sites/example.com:
- * @code
- * URL: http://dev.drupal.org
- * $sites['dev.drupal.org'] = 'example.com';
+ * The above array will cause Drupal to look for a directory named
+ * "example.com" in the sites directory whenever a request comes from
+ * "example.com", "devexample.com", or "localhost/example". That is useful
+ * on development servers, where the domain name may not be the same as the
+ * domain of the live server. Since Drupal stores file paths into the database
+ * (files, system table, etc.) this will ensure the paths are correct while
+ * accessed on development servers.
  *
- * URL: http://localhost/example
- * $sites['localhost.example'] = 'example.com';
- *
- * URL: http://localhost:8080/example
- * $sites['8080.localhost.example'] = 'example.com';
- *
- * URL: https://www.drupal.org:8080/mysite/test/
- * $sites['8080.www.drupal.org.mysite.test'] = 'example.com';
- * @endcode
- *
- * @see default.settings.php
- * @see \Drupal\Core\DrupalKernel::getSitePath()
- * @see https://www.drupal.org/documentation/install/multi-site
+ * To use this file, copy and rename it such that its path plus filename is
+ * 'sites/sites.php'. If you don't need to use multi-site directory aliasing,
+ * then you can safely ignore this file, and Drupal will ignore it too.
  */
+
+/**
+ * Multi-site directory aliasing:
+ *
+ * Edit the lines below to define directory aliases. Remove the leading hash
+ * signs to enable.
+ */
+# $sites['devexample.com'] = 'example.com';
+# $sites['localhost.example'] = 'example.com';
